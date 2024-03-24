@@ -20,28 +20,28 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/links")
 @RequiredArgsConstructor
 public class LinkController {
-    private final LinkService linkService;
+    private final LinkService jooqLinkService;
     private static final String CHAT_ID_HEADER = "Tg-Chat-Id";
 
     @GetMapping
     public ResponseEntity<ListLinksResponse> findAllById(@RequestHeader(CHAT_ID_HEADER) Long id) {
-        return ok().body(linkService.findAllById(id));
+        return ok().body(jooqLinkService.findAllById(id));
     }
 
     @PostMapping
     public ResponseEntity<LinkResponse> update(
-        @RequestHeader(CHAT_ID_HEADER) Long id,
-        @RequestBody AddLinkRequest req
+            @RequestHeader(CHAT_ID_HEADER) Long id,
+            @RequestBody AddLinkRequest req
     ) {
-        return ok().body(linkService.update(id, req));
+        return ok().body(jooqLinkService.add(id, req));
     }
 
     @DeleteMapping
     public ResponseEntity<LinkResponse> delete(
-        @RequestHeader(CHAT_ID_HEADER) Long id,
-        @RequestBody RemoveLinkRequest req
+            @RequestHeader(CHAT_ID_HEADER) Long id,
+            @RequestBody RemoveLinkRequest req
     ) {
-        return ok().body(linkService.delete(id, req));
+        return ok().body(jooqLinkService.delete(id, req));
     }
 
 }
